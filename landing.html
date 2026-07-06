@@ -9,6 +9,17 @@
   gtag('js', new Date());
   gtag('config', 'G-2T0XMFHWM0');
 </script>
+<!-- NAVER 전환추적 공통 SCRIPT -->
+<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+if (!wcs_add) var wcs_add={};
+wcs_add["wa"] = "s_5a33bf9f78b9";
+if (!_nasa) var _nasa={};
+if(window.wcs){
+wcs.inflow();
+wcs_do();
+}
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>무료 태양광 견적 | ㈜제이엘쏠라시스</title>
@@ -635,6 +646,14 @@ function submitLandingForm() {
   });
   fetch(SCRIPT_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' })
     .then(() => {
+      // NAVER 신청완료(lead) 전환 SCRIPT
+      if (window.wcs) {
+        if (!wcs_add) var wcs_add = {};
+        wcs_add['wa'] = 's_5a33bf9f78b9';
+        var _conv = {};
+        _conv.type = 'lead';
+        wcs.trans(_conv);
+      }
       showToast('✅ 견적 신청이 완료됐습니다! 곧 연락드릴게요 😊');
       document.getElementById('l-name').value = '';
       document.getElementById('l-phone').value = '';
