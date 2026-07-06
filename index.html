@@ -9,6 +9,17 @@
   gtag('js', new Date());
   gtag('config', 'G-2T0XMFHWM0');
 </script>
+<!-- NAVER 전환추적 공통 SCRIPT -->
+<script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
+<script type="text/javascript">
+if (!wcs_add) var wcs_add={};
+wcs_add["wa"] = "s_5a33bf9f78b9";
+if (!_nasa) var _nasa={};
+if(window.wcs){
+wcs.inflow();
+wcs_do();
+}
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>㈜제이엘쏠라시스 JL Solarsys — 태양광 EPC·O&M 전문기업</title>
@@ -1700,6 +1711,14 @@ function submitForm() {
 
   fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' })
     .then(() => {
+      // NAVER 신청완료(lead) 전환 SCRIPT
+      if (window.wcs) {
+        if (!wcs_add) var wcs_add = {};
+        wcs_add['wa'] = 's_5a33bf9f78b9';
+        var _conv = {};
+        _conv.type = 'lead';
+        wcs.trans(_conv);
+      }
       btn.textContent = '신청 완료! ✓';
       btn.style.background = '#2d6a4f';
       document.getElementById('f-name').value = '';
