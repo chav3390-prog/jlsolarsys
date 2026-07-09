@@ -1740,6 +1740,63 @@ footer{background:#050D17;padding:2.5rem 5%}
   <a href="#" class="float-btn navy" aria-label="맨 위로">↑</a>
 </div>
 
+<!-- TOAST -->
+<div class="toast" id="toast" style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy2);color:var(--white);padding:14px 22px;border-radius:10px;font-size:0.9rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,0.35);opacity:0;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .35s;z-index:9999;pointer-events:none;max-width:88vw;text-align:center;word-break:keep-all;"></div>
+
+<script>
+function submitForm() {
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwR6w9lPDGPLxVmPpmYKbgtQaKzqU4OdMiIwxAjKEUMia5WQEN65mKJ-JPPjPnCnxaO/exec';
+  const name     = document.getElementById('f-name').value.trim();
+  const phone    = document.getElementById('f-phone').value.trim();
+  const type     = document.getElementById('f-type').value;
+  const capacity = document.getElementById('f-capacity').value;
+  const region   = document.getElementById('f-region').value.trim();
+  const message  = document.getElementById('f-message').value.trim();
+
+  if (!name || !phone || !region) {
+    showToastMain('⚠️ 성함, 연락처, 설치 지역은 필수입니다');
+    return;
+  }
+
+  const params = new URLSearchParams({
+    name, phone, type, capacity, region, message,
+    timestamp: new Date().toLocaleString('ko-KR'),
+    source: '메인 홈페이지'
+  });
+
+  fetch(SCRIPT_URL + '?' + params.toString(), { method:'GET', mode:'no-cors' })
+    .then(() => {
+      if (window.wcs) {
+        if (!wcs_add) var wcs_add = {};
+        wcs_add['wa'] = 's_5a33bf9f78b9';
+        var _conv = {};
+        _conv.type = 'lead';
+        wcs.trans(_conv);
+      }
+      showToastMain('✅ 견적 신청이 완료됐습니다! 곧 연락드릴게요 😊');
+      document.getElementById('f-name').value = '';
+      document.getElementById('f-phone').value = '';
+      document.getElementById('f-type').value = '';
+      document.getElementById('f-capacity').value = '';
+      document.getElementById('f-region').value = '';
+      document.getElementById('f-message').value = '';
+    })
+    .catch(() => showToastMain('✅ 신청이 접수됐습니다. 곧 연락드리겠습니다!'));
+}
+
+function showToastMain(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => {
+    t.style.opacity = '0';
+    t.style.transform = 'translateX(-50%) translateY(80px)';
+  }, 4000);
+}
+</script>
+
 </body>
 </html>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
