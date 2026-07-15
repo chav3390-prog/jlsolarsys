@@ -1840,7 +1840,7 @@ footer{background:#050D17;padding:2.5rem 5%}
 </div>
 
 <!-- TOAST -->
-<div class="toast" id="toast" style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy2);color:var(--white);padding:14px 22px;border-radius:10px;font-size:0.9rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,0.35);opacity:0;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s ease;z-index:999;max-width:86vw;text-align:center;"></div>
+<div class="toast" id="toast" style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(24px) scale(0.96);background:var(--navy2);color:var(--white);padding:18px 30px;border-radius:12px;font-size:1.15rem;line-height:1.5;font-weight:700;box-shadow:0 12px 36px rgba(0,0,0,0.4);opacity:0;transition:transform .15s cubic-bezier(.34,1.56,.64,1),opacity .15s ease;z-index:999;max-width:90vw;text-align:center;"></div>
 
 <!-- 견적 신청 폼 처리 -->
 <script>
@@ -1848,13 +1848,19 @@ function showToast(msg){
   var toast = document.getElementById('toast');
   if(!toast) return;
   toast.textContent = msg;
-  toast.style.opacity = '1';
-  toast.style.transform = 'translateX(-50%) translateY(0)';
   clearTimeout(window.__toastTimer);
+  // 강제 리플로우로 재요청 시 트랜지션이 즉시 다시 재생되도록 처리
+  toast.style.transition = 'none';
+  toast.style.opacity = '0';
+  toast.style.transform = 'translateX(-50%) translateY(24px) scale(0.96)';
+  void toast.offsetWidth;
+  toast.style.transition = 'transform .15s cubic-bezier(.34,1.56,.64,1),opacity .15s ease';
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0) scale(1)';
   window.__toastTimer = setTimeout(function(){
     toast.style.opacity = '0';
-    toast.style.transform = 'translateX(-50%) translateY(80px)';
-  }, 3800);
+    toast.style.transform = 'translateX(-50%) translateY(24px) scale(0.96)';
+  }, 3200);
 }
 
 function submitForm(){
@@ -1884,26 +1890,25 @@ function submitForm(){
     source: '메인 홈페이지'
   });
 
+  // 결과를 기다리지 않고 즉시 안내 (no-cors 응답은 어차피 읽을 수 없어 체감 속도만 늦춤)
+  showToast('✅ 견적 신청이 완료됐습니다! 곧 연락드릴게요 😊');
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-phone').value = '';
+  document.getElementById('f-type').value = '';
+  document.getElementById('f-capacity').value = '';
+  document.getElementById('f-region').value = '';
+  document.getElementById('f-message').value = '';
+
+  if (window.wcs) {
+    if (!wcs_add) var wcs_add = {};
+    wcs_add['wa'] = 's_5a33bf9f78b9';
+    var _conv = {};
+    _conv.type = 'lead';
+    wcs.trans(_conv);
+  }
+
   fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' })
-    .then(function(){
-      if (window.wcs) {
-        if (!wcs_add) var wcs_add = {};
-        wcs_add['wa'] = 's_5a33bf9f78b9';
-        var _conv = {};
-        _conv.type = 'lead';
-        wcs.trans(_conv);
-      }
-      showToast('✅ 견적 신청이 완료됐습니다! 곧 연락드릴게요 😊');
-      document.getElementById('f-name').value = '';
-      document.getElementById('f-phone').value = '';
-      document.getElementById('f-type').value = '';
-      document.getElementById('f-capacity').value = '';
-      document.getElementById('f-region').value = '';
-      document.getElementById('f-message').value = '';
-    })
-    .catch(function(){
-      showToast('✅ 신청이 접수됐습니다. 곧 연락드리겠습니다!');
-    });
+    .catch(function(){ /* 백그라운드 전송 실패해도 사용자에겐 이미 접수 안내됨 */ });
 }
 </script>
 
