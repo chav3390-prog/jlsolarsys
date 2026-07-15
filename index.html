@@ -1106,6 +1106,7 @@ footer{background:#050D17;padding:2.5rem 5%}
           <br><span class="sub" style="margin-left:0;margin-top:6px;display:inline-block">태양광 시행 · 시공(EPC) · 유지관리(O&amp;M)</span>
         </div>
       </div>
+    </div>
   </div>
 
 </section>
@@ -1839,4 +1840,72 @@ footer{background:#050D17;padding:2.5rem 5%}
 </div>
 
 <!-- TOAST -->
-<div class="toast" id="toast" style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy2);color:var(--white);padding:14px 22px;border-radius:10px;font-size:0.9rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,0.35);opacity:0;transition:transform .35s cubic-bezie
+<div class="toast" id="toast" style="position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy2);color:var(--white);padding:14px 22px;border-radius:10px;font-size:0.9rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,0.35);opacity:0;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s ease;z-index:999;max-width:86vw;text-align:center;"></div>
+
+<!-- 견적 신청 폼 처리 -->
+<script>
+function showToast(msg){
+  var toast = document.getElementById('toast');
+  if(!toast) return;
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(function(){
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(80px)';
+  }, 3800);
+}
+
+function submitForm(){
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwR6w9lPDGPLxVmPpmYKbgtQaKzqU4OdMiIwxAjKEUMia5WQEN65mKJ-JPPjPnCnxaO/exec';
+  var name = document.getElementById('f-name').value.trim();
+  var phone = document.getElementById('f-phone').value.trim();
+  var type = document.getElementById('f-type').value;
+  var capacity = document.getElementById('f-capacity').value;
+  var region = document.getElementById('f-region').value.trim();
+  var message = document.getElementById('f-message').value.trim();
+
+  if(!name || !phone || !type || !region){
+    showToast('성함, 연락처, 사업 유형, 설치 지역은 필수입니다.');
+    return;
+  }
+  var phonePattern = /^[0-9][0-9\-\s]{8,13}$/;
+  if(!phonePattern.test(phone)){
+    showToast('연락처를 정확히 입력해 주세요. (예: 010-0000-0000)');
+    document.getElementById('f-phone').focus();
+    return;
+  }
+
+  var params = new URLSearchParams({
+    name: name, phone: phone, type: type, capacity: capacity,
+    region: region, message: message,
+    timestamp: new Date().toLocaleString('ko-KR'),
+    source: '메인 홈페이지'
+  });
+
+  fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' })
+    .then(function(){
+      if (window.wcs) {
+        if (!wcs_add) var wcs_add = {};
+        wcs_add['wa'] = 's_5a33bf9f78b9';
+        var _conv = {};
+        _conv.type = 'lead';
+        wcs.trans(_conv);
+      }
+      showToast('✅ 견적 신청이 완료됐습니다! 곧 연락드릴게요 😊');
+      document.getElementById('f-name').value = '';
+      document.getElementById('f-phone').value = '';
+      document.getElementById('f-type').value = '';
+      document.getElementById('f-capacity').value = '';
+      document.getElementById('f-region').value = '';
+      document.getElementById('f-message').value = '';
+    })
+    .catch(function(){
+      showToast('✅ 신청이 접수됐습니다. 곧 연락드리겠습니다!');
+    });
+}
+</script>
+
+</body>
+</html>
