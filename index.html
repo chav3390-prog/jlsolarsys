@@ -9,16 +9,31 @@
   gtag('js', new Date());
   gtag('config', 'G-2T0XMFHWM0');
 </script>
-<!-- NAVER 전환추적 공통 SCRIPT -->
-<script type="text/javascript" src="//wcs.naver.net/wcslog.js" async></script>
+<!-- NAVER 전환추적 공통 SCRIPT (wcslog.js 로드 완료 후 실행 보장) -->
 <script type="text/javascript">
-if (!wcs_add) var wcs_add={};
-wcs_add["wa"] = "s_5a33bf9f78b9";
-if (!_nasa) var _nasa={};
-if(window.wcs){
-wcs.inflow();
-wcs_do();
-}
+(function () {
+  if (!window.wcs_add) window.wcs_add = { wa: "s_5a33bf9f78b9" };
+  var executed = false;
+  function runWcs() {
+    if (executed || !window.wcs || typeof window.wcs_do !== 'function') return;
+    executed = true;
+    var _nasa = {}; //초기화구문
+    wcs.inflow("jlsolarsys.com"); //inflow구문
+    wcs_do(_nasa);
+  }
+  // 동적 로드: 호스팅단에서 async/defer가 강제 주입되어도 onload로 실행 순서 보장
+  var s = document.createElement('script');
+  s.type = 'text/javascript';
+  s.src = 'https://wcs.naver.net/wcslog.js';
+  s.onload = runWcs;
+  (document.head || document.documentElement).appendChild(s);
+  // 보험: onload 누락 대비 최대 10초 폴링
+  var tries = 0;
+  var timer = setInterval(function () {
+    if (executed || ++tries > 50) { clearInterval(timer); return; }
+    runWcs();
+  }, 200);
+})();
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1899,13 +1914,18 @@ function submitForm(){
   document.getElementById('f-region').value = '';
   document.getElementById('f-message').value = '';
 
-  if (window.wcs) {
-    if (!wcs_add) var wcs_add = {};
-    wcs_add['wa'] = 's_5a33bf9f78b9';
-    var _conv = {};
-    _conv.type = 'lead';
-    wcs.trans(_conv);
-  }
+  // NAVER 신청완료(lead) 전환 SCRIPT — wcs 미로드 시 최대 3초 재시도
+  (function fireTrans(n) {
+    if (window.wcs) {
+      if (!window.wcs_add) window.wcs_add = {};
+      window.wcs_add['wa'] = 's_5a33bf9f78b9';
+      var _conv = {};
+      _conv.type = 'lead';
+      wcs.trans(_conv);
+    } else if (n < 10) {
+      setTimeout(function () { fireTrans(n + 1); }, 300);
+    }
+  })(0);
 
   fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' })
     .catch(function(){ /* 백그라운드 전송 실패해도 사용자에겐 이미 접수 안내됨 */ });
