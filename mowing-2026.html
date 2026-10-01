@@ -210,6 +210,32 @@ footer{background:#050D17;padding:2.5rem 5%}
   .footer-inner{grid-template-columns:1fr}
   .footer-logo img{height:50px}
 }
+
+/* ── CTA 개편 (2026.10): 전화 플로팅 제거 · 견적 신청 강조 ── */
+.float-btn.float-quote{
+  width:auto;height:58px;border-radius:30px;padding:0 24px 0 20px;gap:8px;
+  white-space:nowrap;color:var(--navy);font-size:1.15rem;
+  box-shadow:0 6px 22px rgba(244,200,36,0.45),0 4px 14px rgba(0,0,0,0.25);
+}
+.float-btn.float-quote span{font-size:0.98rem;font-weight:800;letter-spacing:-0.01em}
+.float-btn.float-quote:hover{background:var(--gold2);transform:translateY(-2px)}
+@media (max-width:640px){
+  .float-cta{right:16px;bottom:20px}
+  .float-btn.float-quote{height:52px;padding:0 20px 0 16px}
+}
+.contact-cta .cta-actions{flex-direction:column;align-items:flex-end;gap:0.7rem}
+.contact-cta .cta-actions .btn-navy{
+  padding:1.15rem 2.6rem;font-size:1.15rem;font-weight:800;border-radius:6px;
+  justify-content:center;
+}
+.contact-cta .cta-tel{font-size:0.92rem;font-weight:500;gap:6px}
+.contact-cta .cta-tel::before{font-size:0.85rem}
+@media (max-width:640px){
+  .contact-cta .cta-actions{align-items:stretch;width:100%}
+  .contact-cta .cta-tel{justify-content:center}
+}
+.contact-cta .cta-actions .btn-navy{box-shadow:0 6px 18px rgba(244,200,36,0.3)}
+.contact-cta .cta-tel{color:rgba(255,255,255,0.6)}
 </style>
 </head>
 <body>
@@ -297,8 +323,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>예초부터 패널 세정, AI 관제까지 — 제이엘쏠라시스의 O&amp;M 서비스로 발전소를 지켜드립니다.</p>
   </div>
   <div class="cta-actions">
-    <div class="cta-tel">02-858-5055</div>
     <a href="index.html#contact" class="btn-navy">예초 서비스 문의 ▶</a>
+    <div class="cta-tel">02-858-5055</div>
   </div>
 </div>
 
@@ -342,8 +368,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 
 <div class="float-cta">
-  <a href="tel:02-858-5055" class="float-btn gold" aria-label="전화 상담">&#9742;</a>
-  <a href="index.html#contact" class="float-btn navy" aria-label="무료 견적 신청" style="width:auto;border-radius:28px;padding:0 18px 0 14px;gap:6px;white-space:nowrap;">&#128203; <span style="font-size:0.85rem;font-weight:700;">무료 견적</span></a>
+  <a href="index.html#contact" class="float-btn gold float-quote" aria-label="무료 견적 신청">&#128203; <span>무료 견적 신청</span></a>
 </div>
 
 <script>
