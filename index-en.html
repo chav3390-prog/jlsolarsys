@@ -1321,9 +1321,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span class="lic-thumb"><img src="images/licenses/license-bizreg-jl-thumb.jpg" alt="JL Solarsys – Business Registration Certificate" loading="lazy"><span class="lic-zoom">Enlarge +</span></span>
       <span class="lic-body"><span class="lic-co">JL Solarsys Co., Ltd.</span><span class="lic-title">Business Registration Certificate</span><span class="lic-meta">Reg. No. 194-86-00430<br>Guro Tax Office · Jun 4, 2025</span></span>
     </button>
-    <button type="button" class="lic-card" data-lic="images/licenses/license-ecommerce-jl.jpg" data-cap="JL Solarsys – Mail-Order Business Report">
-      <span class="lic-thumb"><img src="images/licenses/license-ecommerce-jl-thumb.jpg" alt="JL Solarsys – Mail-Order Business Report" loading="lazy"><span class="lic-zoom">Enlarge +</span></span>
-      <span class="lic-body"><span class="lic-co">JL Solarsys Co., Ltd.</span><span class="lic-title">Mail-Order Business Report</span><span class="lic-meta">No. 2022-Goyang Deogyang-gu-0617<br>Deogyang-gu Office, Goyang · Mar 10, 2022</span></span>
+    <button type="button" class="lic-card" data-lic="images/licenses/license-ecommerce-jl.jpg?v=20261022" data-cap="JL Solarsys – Mail-Order Business Report">
+      <span class="lic-thumb"><img src="images/licenses/license-ecommerce-jl-thumb.jpg?v=20261022" alt="JL Solarsys – Mail-Order Business Report" loading="lazy"><span class="lic-zoom">Enlarge +</span></span>
+      <span class="lic-body"><span class="lic-co">JL Solarsys Co., Ltd.</span><span class="lic-title">Mail-Order Business Report</span><span class="lic-meta">No. 2026-Seoul Guro-1811<br>Guro-gu Office, Seoul · Oct 15, 2026</span></span>
     </button>
     <button type="button" class="lic-card" data-lic="images/licenses/license-wood-jl.jpg" data-cap="JL Solarsys – Timber Production Business Registration">
       <span class="lic-thumb"><img src="images/licenses/license-wood-jl-thumb.jpg" alt="JL Solarsys – Timber Production Business Registration" loading="lazy"><span class="lic-zoom">Enlarge +</span></span>
@@ -1500,6 +1500,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
   <div class="cases-grid">
 
+    <div class="case-card" data-cat="ground" data-date="202610">
+      <div class="case-thumb" data-tag="Ground · Chungju" style="background-image:url('images/case-28.jpg')"></div>
+      <div class="case-body">
+        <div class="case-name">Chungju Yeongdeok-ri Plant</div>
+        <div class="case-meta">
+          <span><small>Capacity</small><strong>1,700kW</strong></span>
+          <span><small>Completed</small><strong>2026.10</strong></span>
+          <span><small>Type</small><strong>In-house</strong></span>
+        </div>
+      </div>
+    </div>
     <div class="case-card" data-cat="ground" data-date="202606">
       <div class="case-thumb" data-tag="Ground · Danyang" style="background-image:url('images/case-01.jpg')"></div>
       <div class="case-body">
@@ -2031,7 +2042,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         Tel: +82-2-858-5055<br>
         Email: jlsolarsys@naver.com<br>
         Business Reg. No.: 194-86-00430 <button type="button" class="footer-biz-link" data-lic="images/licenses/license-bizreg-jl.jpg" data-cap="JL Solarsys – Business Registration Certificate">View</button><br>
-        Mail-order Business No.: 2022-Goyang Deogyang-gu-0617<br>
+        Mail-order Business No.: 2026-Seoul Guro-1811<br>
       </div>
     </div>
     <div class="footer-col">
@@ -2160,6 +2171,52 @@ function submitForm(){
   m.addEventListener('click',function(e){ if(e.target===m) close(); });
   m.querySelector('.lic-modal-close').addEventListener('click',close);
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+})();
+</script>
+<!-- NAVER 사용자정의(custom002) 견적문의 클릭 SCRIPT -->
+<script type="text/javascript">
+(function () {
+  var WA = 's_5a33bf9f78b9', TYPE = 'custom002', fired = false;
+  // 견적문의 버튼: 상단 무료견적상담 · 모바일 메뉴 견적 · 떠있는 견적 버튼 · 첫화면 견적 버튼 · 사업분야 상담신청 · 중간 띠배너 견적 버튼
+  var SEL = '.nav-cta-btn, .m-menu-cta, .float-quote, .btn-gold[href$="#contact"], .sol-more, .contact-cta .btn-navy';
+  function ensureLib() {
+    if (window.wcs || document.querySelector('script[src*="wcs.naver.net/wcslog.js"]')) return;
+    var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true;
+    s.src = 'https://wcs.naver.net/wcslog.js'; (document.head || document.documentElement).appendChild(s);
+  }
+  function send() {
+    if (!window.wcs || typeof window.wcs.trans !== 'function') return false;
+    if (!window.wcs_add) window.wcs_add = {};
+    window.wcs_add['wa'] = WA;
+    var _conv = {}; _conv.type = TYPE;
+    window.wcs.trans(_conv);
+    return true;
+  }
+  function fire(done) {
+    if (fired) { if (done) done(); return; }   // 한 페이지에서 1회만 기록
+    fired = true; ensureLib();
+    var n = 0;
+    (function tryIt() {
+      if (send() || ++n > 15) { if (done) done(); }   // wcslog.js 로드 대기 최대 3초
+      else setTimeout(tryIt, 200);
+    })();
+  }
+  ensureLib();
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest(SEL) : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    var newTab = e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1;
+    if (href && href.charAt(0) !== '#' && !newTab) {
+      // 다른 페이지로 이동하는 버튼은 전환 기록 후 이동
+      e.preventDefault();
+      var gone = false, go = function () { if (gone) return; gone = true; window.location.href = a.href; };
+      fire(function () { setTimeout(go, 150); });
+      setTimeout(go, 1200);
+    } else {
+      fire();
+    }
+  }, true);
 })();
 </script>
 <!-- MR Script Ver 2.0 -->

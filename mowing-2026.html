@@ -428,7 +428,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         대표전화: 02-858-5055<br>
         이메일: jlsolarsys@naver.com<br>
         사업자등록번호: 194-86-00430 <a href="index.html#licenses" class="footer-biz-link">사업자정보 확인</a><br>
-        통신판매업신고: 제2022-고양덕양구-0617호<br>
+        통신판매업신고: 제2026-서울구로-1811호<br>
       </div>
     </div>
     <div class="footer-col">
@@ -478,6 +478,52 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 
+<!-- NAVER 사용자정의(custom002) 견적문의 클릭 SCRIPT -->
+<script type="text/javascript">
+(function () {
+  var WA = 's_5a33bf9f78b9', TYPE = 'custom002', fired = false;
+  // 견적문의 버튼: 상단 무료견적상담 · 모바일 메뉴 견적 · 떠있는 견적 버튼 · 첫화면 견적 버튼 · 사업분야 상담신청 · 중간 띠배너 견적 버튼
+  var SEL = '.nav-cta-btn, .m-menu-cta, .float-quote, .btn-gold[href$="#contact"], .sol-more, .contact-cta .btn-navy';
+  function ensureLib() {
+    if (window.wcs || document.querySelector('script[src*="wcs.naver.net/wcslog.js"]')) return;
+    var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true;
+    s.src = 'https://wcs.naver.net/wcslog.js'; (document.head || document.documentElement).appendChild(s);
+  }
+  function send() {
+    if (!window.wcs || typeof window.wcs.trans !== 'function') return false;
+    if (!window.wcs_add) window.wcs_add = {};
+    window.wcs_add['wa'] = WA;
+    var _conv = {}; _conv.type = TYPE;
+    window.wcs.trans(_conv);
+    return true;
+  }
+  function fire(done) {
+    if (fired) { if (done) done(); return; }   // 한 페이지에서 1회만 기록
+    fired = true; ensureLib();
+    var n = 0;
+    (function tryIt() {
+      if (send() || ++n > 15) { if (done) done(); }   // wcslog.js 로드 대기 최대 3초
+      else setTimeout(tryIt, 200);
+    })();
+  }
+  ensureLib();
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest(SEL) : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    var newTab = e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1;
+    if (href && href.charAt(0) !== '#' && !newTab) {
+      // 다른 페이지로 이동하는 버튼은 전환 기록 후 이동
+      e.preventDefault();
+      var gone = false, go = function () { if (gone) return; gone = true; window.location.href = a.href; };
+      fire(function () { setTimeout(go, 150); });
+      setTimeout(go, 1200);
+    } else {
+      fire();
+    }
+  }, true);
+})();
+</script>
 <!-- MR Script Ver 2.0 -->
 <script async="true" src="//log1.toup.net/mirae_log_chat_common.js?adkey=tkwaj" charset="UTF-8"></script>
 <!-- MR Script END Ver 2.0 -->
