@@ -1163,6 +1163,34 @@ body.lic-open .float-cta{opacity:0;visibility:hidden}
   .info-row{grid-template-columns:118px 1fr}
   .info-label{font-size:0.78rem;line-height:1.35}
 }
+
+/* ── 카드뉴스 뷰어 (2026.11) ── */
+.cn-card{cursor:pointer}
+.cn-card:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.news-thumb{position:relative}
+.cn-flag{position:absolute;right:10px;top:10px;background:rgba(11,24,38,0.85);color:var(--gold);font-size:0.72rem;font-weight:700;padding:4px 10px;border-radius:2px}
+.cn-modal{position:fixed;inset:0;z-index:1000;background:rgba(5,13,23,0.92);display:none;align-items:center;justify-content:center;padding:60px 70px 70px}
+.cn-modal.open{display:flex}
+.cn-stage{position:relative;width:min(640px,100%,calc(100vh - 150px));width:min(640px,100%,calc(100dvh - 150px))}
+.cn-stage img{display:block;width:100%;height:auto;aspect-ratio:1/1;background:var(--navy);box-shadow:0 12px 44px rgba(0,0,0,0.5);user-select:none;-webkit-user-drag:none}
+.cn-close{position:absolute;top:-50px;right:0;width:40px;height:40px;border-radius:50%;background:var(--gold);color:var(--navy);border:none;font-size:1.4rem;font-weight:700;cursor:pointer;line-height:40px}
+.cn-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.35);background:rgba(11,24,38,0.6);color:#fff;font-size:1.3rem;cursor:pointer}
+.cn-nav:hover{border-color:var(--gold);color:var(--gold)}
+.cn-nav:disabled{opacity:0.25;cursor:default}
+.cn-prev{left:-64px}.cn-next{right:-64px}
+.cn-bar{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:rgba(255,255,255,0.8);font-size:0.85rem;gap:12px}
+.cn-dots{display:flex;gap:6px}
+.cn-dots i{width:8px;height:8px;border-radius:4px;background:rgba(255,255,255,0.25);transition:all .2s}
+.cn-dots i.on{width:22px;background:var(--gold)}
+body.cn-open{overflow:hidden}
+body.cn-open .float-cta{opacity:0;visibility:hidden}
+@media (max-width:640px){
+  .cn-modal{padding:60px 14px 40px}
+  .cn-nav{top:auto;bottom:-58px;transform:none;width:42px;height:42px}
+  .cn-prev{left:0}.cn-next{right:0}
+  .cn-bar{justify-content:center;margin-top:18px}
+  .cn-bar .cn-cap{display:none}
+}
 </style>
 </head>
 <body>
@@ -1907,15 +1935,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- NEWS -->
 <section id="news" style="background:var(--white);padding:5.5rem 5%">
   <div class="sec-kicker">소식</div>
-  <p class="sec-sub">회사 소식·시공 사례·공지사항을 이곳에 업데이트해 주세요.</p>
+  <p class="sec-sub">태양광 정책 변화와 제이엘쏠라시스의 현장 소식을 전해드립니다.</p>
   <div class="news-carousel-wrap">
     <button class="news-arrow" id="newsPrev" onclick="newsSlide(-1)" aria-label="이전 소식">&#10094;</button>
     <div class="news-viewport">
       <div class="news-track" id="newsTrack">
+        <div class="news-card cn-card" data-cn="rps2027" role="button" tabindex="0" aria-label="카드뉴스 보기: 2027년부터 태양광 RPS 폐지, 경쟁입찰·한전 장기계약으로 전환">
+          <div class="news-thumb"><img src="news/news-7-rps2027.jpg" alt="2027년부터 RPS 폐지, 경쟁입찰·한전 장기계약으로 전환"><span class="cn-flag">카드뉴스 6장</span></div>
+          <div class="news-body">
+            <span class="news-tag">정책정보</span><span class="news-badge-new">NEW</span>
+            <div class="news-title">2027년부터 태양광 RPS 폐지 — 경쟁입찰·한전 장기계약으로 전환</div>
+            <div class="news-date">2026.11</div>
+          </div>
+        </div>
+        <div class="news-card cn-card" data-cn="setback" role="button" tabindex="0" aria-label="카드뉴스 보기: 태양광 이격거리 최대 200m로 제한">
+          <div class="news-thumb"><img src="news/news-8-setback.jpg" alt="태양광 이격거리 최대 200m로 제한, 도로 이격 규제 폐지"><span class="cn-flag">카드뉴스 5장</span></div>
+          <div class="news-body">
+            <span class="news-tag">정책정보</span><span class="news-badge-new">NEW</span>
+            <div class="news-title">태양광 이격거리 최대 200m로 제한 — 도로 이격 규제 폐지(9.18 시행)</div>
+            <div class="news-date">2026.11</div>
+          </div>
+        </div>
         <div class="news-card" onclick="location.href='mowing-2026.html'" style="cursor:pointer">
           <div class="news-thumb"><img src="news/news-6-mowing2026.jpg" alt="2026년 1차 예초 서비스 완료"></div>
           <div class="news-body">
-            <span class="news-tag">O&amp;M 실적</span><span class="news-badge-new">NEW</span>
+            <span class="news-tag">O&amp;M 실적</span>
             <div class="news-title">2026년 1차 예초 서비스 완료 — 6개 지역 20개 발전소, 69기 정기 관리</div>
             <div class="news-date">2026.08</div>
           </div>
@@ -1950,14 +1994,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <span class="news-tag">SNS</span>
             <div class="news-title">인스타그램에서 시공 현장과 최신 소식을 확인하세요.</div>
             <div class="news-date">📷 @solarsys100</div>
-          </div>
-        </div>
-        <div class="news-card">
-          <div class="news-thumb"><img src="news/news-4-comingsoon.jpg" alt="뉴스 콘텐츠 준비중"></div>
-          <div class="news-body">
-            <span class="news-tag">콘텐츠 준비중</span>
-            <div class="news-title">뉴스 콘텐츠 준비중입니다.</div>
-            <div class="news-date">—</div>
           </div>
         </div>
       </div>
@@ -2217,6 +2253,46 @@ function submitForm(){
   m.addEventListener('click',function(e){ if(e.target===m) close(); });
   m.querySelector('.lic-modal-close').addEventListener('click',close);
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+})();
+</script>
+<div class="cn-modal" id="cn-modal" role="dialog" aria-modal="true" aria-label="카드뉴스 보기">
+  <div class="cn-stage">
+    <button type="button" class="cn-close" aria-label="닫기">&times;</button>
+    <button type="button" class="cn-nav cn-prev" aria-label="이전 장">&#10094;</button>
+    <img alt="">
+    <button type="button" class="cn-nav cn-next" aria-label="다음 장">&#10095;</button>
+    <div class="cn-bar"><span class="cn-cap"></span><span class="cn-dots"></span><span class="cn-count"></span></div>
+  </div>
+</div>
+<script>
+(function(){
+  var SETS={
+    rps2027:{title:'2027년부터 태양광 RPS 폐지 — 경쟁입찰·한전 장기계약으로 전환',dir:'news/cardnews/rps2027/',n:6},
+    setback:{title:'태양광 이격거리 최대 200m로 제한 — 도로 이격 규제 폐지',dir:'news/cardnews/setback/',n:5}
+  };
+  var m=document.getElementById('cn-modal'); if(!m) return;
+  var img=m.querySelector('img'), cap=m.querySelector('.cn-cap'), cnt=m.querySelector('.cn-count'), dots=m.querySelector('.cn-dots');
+  var prev=m.querySelector('.cn-prev'), next=m.querySelector('.cn-next'), cur=null, i=0, last=null;
+  function src(k){ return cur.dir+(k<9?'0':'')+(k+1)+'.jpg'; }
+  function show(){
+    img.src=src(i); img.alt=cur.title+' ('+(i+1)+'/'+cur.n+')';
+    cnt.textContent=(i+1)+' / '+cur.n; prev.disabled=(i===0); next.disabled=(i===cur.n-1);
+    dots.innerHTML=''; for(var k=0;k<cur.n;k++){ var d=document.createElement('i'); if(k===i) d.className='on'; dots.appendChild(d); }
+    if(i+1<cur.n){ var pre=new Image(); pre.src=src(i+1); }
+  }
+  function open(key,el){ cur=SETS[key]; if(!cur) return; i=0; last=el; cap.textContent=cur.title; show(); m.classList.add('open'); document.body.classList.add('cn-open'); m.querySelector('.cn-close').focus(); }
+  function close(){ if(!m.classList.contains('open')) return; m.classList.remove('open'); document.body.classList.remove('cn-open'); img.removeAttribute('src'); if(last) last.focus(); }
+  function go(d){ if(!cur) return; var j=i+d; if(j<0||j>=cur.n) return; i=j; show(); }
+  document.querySelectorAll('[data-cn]').forEach(function(c){
+    c.addEventListener('click',function(){ open(c.getAttribute('data-cn'),c); });
+    c.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(c.getAttribute('data-cn'),c); } });
+  });
+  prev.addEventListener('click',function(){ go(-1); }); next.addEventListener('click',function(){ go(1); });
+  m.querySelector('.cn-close').addEventListener('click',close);
+  m.addEventListener('click',function(e){ if(e.target===m) close(); });
+  document.addEventListener('keydown',function(e){ if(!m.classList.contains('open')) return; if(e.key==='Escape') close(); else if(e.key==='ArrowLeft') go(-1); else if(e.key==='ArrowRight') go(1); });
+  var x0=null; img.addEventListener('touchstart',function(e){ x0=e.touches[0].clientX; },{passive:true});
+  img.addEventListener('touchend',function(e){ if(x0===null) return; var dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>40) go(dx<0?1:-1); x0=null; });
 })();
 </script>
 <!-- NAVER 사용자정의(custom002) 견적문의 클릭 SCRIPT -->
